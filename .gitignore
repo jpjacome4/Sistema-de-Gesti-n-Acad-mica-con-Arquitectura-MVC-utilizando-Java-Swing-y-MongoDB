@@ -1,0 +1,19 @@
+# Archivos de compilación (Basura)
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Archivos de NetBeans o IntelliJ
+nbproject/
+nbbuild/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+.idea/
+*.iml
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
