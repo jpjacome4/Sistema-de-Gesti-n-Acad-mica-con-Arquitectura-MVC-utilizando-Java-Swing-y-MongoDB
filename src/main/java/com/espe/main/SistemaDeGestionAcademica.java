@@ -1,4 +1,4 @@
-package com.mycompany.sistemadegestionacademica;
+package com.espe.main;
 
 
 public class SistemaDeGestionAcademica {
