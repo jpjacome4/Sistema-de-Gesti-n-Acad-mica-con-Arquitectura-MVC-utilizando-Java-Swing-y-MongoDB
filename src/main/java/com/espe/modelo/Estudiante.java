@@ -8,6 +8,6 @@ package com.espe.modelo;
  *
  * @author Paul
  */
-public abstract class Usuario {
+public class Estudiante {
     
 }
