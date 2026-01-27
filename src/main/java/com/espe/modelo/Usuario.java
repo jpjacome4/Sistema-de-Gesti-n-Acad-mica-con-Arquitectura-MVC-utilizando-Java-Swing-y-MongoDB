@@ -14,6 +14,13 @@ public abstract class Usuario {
     private String apellido;
     private String correo;
 
+    public Usuario(String cedula, String nombre, String apellido, String correo) {
+        this.cedula = cedula;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.correo = correo;
+    }
+    
     public String getCedula() {
         return cedula;
     }
@@ -46,5 +53,7 @@ public abstract class Usuario {
         this.correo = correo;
     }
     
-    public String toString;
+    public String toString(){
+        return "Usuario{" + "cedula=" + cedula + ", nombre=" + nombre + ", apellido=" + apellido + ", correo=" + correo + '}';
+    }
 }
