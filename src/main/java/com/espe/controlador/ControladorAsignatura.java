@@ -40,14 +40,14 @@ public class ControladorAsignatura {
     }
     
     
-    public boolean guardarAsignatura(String codigo, String nombre,
-                                     int creditos, String cedulaDocente) {
+    public boolean guardarAsignatura(String codigo, String nombre, int creditos, String cedulaDocente) {
 
         if (creditos <= 0) {
             throw new IllegalArgumentException("Los créditos deben ser positivos");
         }
 
         Asignatura a = new Asignatura(codigo, nombre, creditos, cedulaDocente);
+
         return asignaturaDAO.crear(a);
     }
 }
