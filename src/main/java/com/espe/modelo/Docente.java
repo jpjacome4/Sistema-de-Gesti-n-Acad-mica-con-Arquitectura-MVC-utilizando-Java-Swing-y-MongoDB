@@ -37,7 +37,7 @@ public class Docente extends Usuario{
 
     @Override
     public String toString() {
-        return super.toString() + ", titulo=" + titulo + ", especialidad=" + departamento + '}';
+        return super.toString() + ", titulo=" + titulo + ", Departamento=" + departamento + '}';
     }
     
 }
