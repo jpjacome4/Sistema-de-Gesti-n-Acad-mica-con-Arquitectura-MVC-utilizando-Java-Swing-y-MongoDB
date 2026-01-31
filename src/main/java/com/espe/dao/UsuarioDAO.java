@@ -5,6 +5,8 @@ import com.espe.modelo.Estudiante;
 import com.espe.modelo.Usuario;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import java.util.ArrayList;
+import java.util.List;
 import org.bson.Document;
 
 // Si tu interfaz ICrud es genérica, descomenta "implements ICrud<Usuario>"
@@ -47,5 +49,44 @@ public class UsuarioDAO {
             MongoCollection<Document> collection = db.getCollection("docentes");
             collection.insertOne(doc);
         }
+    }
+    public List<Usuario> leerTodos() {
+        List<Usuario> listaUsuarios = new ArrayList<>();
+        
+        try {
+            // 1. LEER ESTUDIANTES
+            MongoCollection<Document> colEstudiantes = db.getCollection("estudiantes");
+            for (Document doc : colEstudiantes.find()) {
+                // Convertimos el Documento de Mongo a objeto Estudiante
+                Estudiante est = new Estudiante(
+                    doc.getString("cedula"),
+                    doc.getString("nombre"),
+                    doc.getString("apellido"),
+                    doc.getString("correo"),
+                    doc.getString("carrera")
+                );
+                listaUsuarios.add(est); // Lo agregamos a la lista general
+            }
+
+            // 2. LEER DOCENTES
+            MongoCollection<Document> colDocentes = db.getCollection("docentes");
+            for (Document doc : colDocentes.find()) {
+                // Convertimos el Documento de Mongo a objeto Docente
+                Docente docen = new Docente(
+                    doc.getString("cedula"),
+                    doc.getString("nombre"),
+                    doc.getString("apellido"),
+                    doc.getString("correo"),
+                    doc.getString("titulo"),
+                    doc.getString("departamento")
+                );
+                listaUsuarios.add(docen); // Lo agregamos a la lista general
+            }
+            
+        } catch (Exception e) {
+            System.out.println("Error al leer usuarios: " + e.getMessage());
+        }
+
+        return listaUsuarios;
     }
 }
