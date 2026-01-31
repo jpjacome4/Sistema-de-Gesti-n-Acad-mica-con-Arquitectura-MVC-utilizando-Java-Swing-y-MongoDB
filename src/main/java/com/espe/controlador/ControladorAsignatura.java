@@ -22,8 +22,8 @@ public class ControladorAsignatura {
     private AsignaturaDAO asignaturaDAO;
 
     public ControladorAsignatura() {
-        this.usuarioDAO = usuarioDAO;
-        this.asignaturaDAO = asignaturaDAO;
+        this.usuarioDAO = new UsuarioDAO();
+        this.asignaturaDAO = new AsignaturaDAO();
     }
     
     public List<Docente> obtenerListaDocentes() {
