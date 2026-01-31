@@ -4,15 +4,6 @@
  */
 package com.espe.vista;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-
 /**
  *
  * @author Paul
@@ -20,77 +11,14 @@ import javax.swing.SwingUtilities;
 public class VistaPrincipal extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaPrincipal.class.getName());
-private JPanel contenedorPrincipal;
-    private CardLayout cardLayout;
 
-    private PanelUsuarios panelUsuarios;         
-    private PanelAsignaturas panelAsignaturas;   
-    private PanelMatricula panelMatricula;
     /**
      * Creates new form VistaPrincipal
      */
     public VistaPrincipal() {
-        configurarVentana();
-        inicializarComponentes();
-        configurarMenu();
         initComponents();
     }
-    
-    
-    private void configurarVentana() {
-        setTitle("Sistema de Gestión Académica - MongoDB");
-        setSize(900, 700);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-    }
 
-    private void inicializarComponentes() {
-        cardLayout = new CardLayout();
-        contenedorPrincipal = new JPanel(cardLayout);
-
-        // Instanciamos los paneles
-        panelUsuarios = new PanelUsuarios();
-        panelAsignaturas = new PanelAsignaturas();
-        panelMatricula = new PanelMatricula();
-
-        // Los añadimos al contenedor con un "Nombre Clave"
-        contenedorPrincipal.add(panelUsuarios, "USUARIOS");
-        contenedorPrincipal.add(panelAsignaturas, "ASIGNATURAS");
-        contenedorPrincipal.add(panelMatricula, "MATRICULA");
-
-        add(contenedorPrincipal, BorderLayout.CENTER);
-    }
-
-    private void configurarMenu() {
-        JMenuBar menuBar = new JMenuBar();
-
-        // Menú principal
-        JMenu menuGestion = new JMenu("Gestión Académica");
-
-        // Ítems del menú
-        JMenuItem itemUsuarios = new JMenuItem("Usuarios ");
-        JMenuItem itemAsignaturas = new JMenuItem("Asignaturas ");
-        JMenuItem itemMatricula = new JMenuItem("Matriculación ");
-
-        // Acciones para cambiar de "Carta" (Pantalla)
-        itemUsuarios.addActionListener(e -> cardLayout.show(contenedorPrincipal, "USUARIOS"));
-        itemAsignaturas.addActionListener(e -> cardLayout.show(contenedorPrincipal, "ASIGNATURAS"));
-        itemMatricula.addActionListener(e -> cardLayout.show(contenedorPrincipal, "MATRICULA"));
-
-        // Organizar el menú
-        menuGestion.add(itemUsuarios);
-        menuGestion.add(itemAsignaturas);
-        menuGestion.addSeparator();
-        menuGestion.add(itemMatricula);
-        
-        menuBar.add(menuGestion);
-        setJMenuBar(menuBar);
-    }
-
-}
-    
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
