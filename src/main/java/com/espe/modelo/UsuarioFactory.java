@@ -9,5 +9,20 @@ package com.espe.modelo;
  * @author Paul
  */
 public class UsuarioFactory {
-    
+    public static Usuario crearUsuario(String tipo) {
+        
+        if (tipo == null) {
+            return null;
+        }
+        if (tipo.equalsIgnoreCase("EST")) {
+            
+            return new Estudiante("", "", "", "", "");
+        } 
+        
+        else if (tipo.equalsIgnoreCase("DOC")) {
+           
+            return new Docente("", "", "", "", "", "");
+        }
+        return null; 
+    }
 }
