@@ -8,6 +8,8 @@ import com.espe.interfaces.ICrud;
 import com.espe.modelo.Matricula;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
@@ -40,30 +42,71 @@ public class MatriculaDAO  implements ICrud<Matricula>  {
             return false;
         }
     }
-    public List<Matricula> listar() {
-        List<Matricula> lista = new ArrayList<>();
-        return lista;
-    }
+
 
     @Override
     public List<Matricula> leerTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+     List<Matricula> lista = new ArrayList<>();
+
+        for (Document doc : coleccion.find()) {
+            Matricula m = new Matricula();
+            m.setIdMatricula(doc.getString("id Matricula"));
+            m.setFecha(doc.getDate("fecha"));
+            m.setCedulaEstudiante(doc.getString("Cedula Estudiante"));
+            m.setCodigosAsignaturas(doc.getList("codigosAsignaturas", String.class));
+            lista.add(m);
+        }
+        return lista;
     }
 
 
+    // ACTUALIZAR
     @Override
-    public boolean eliminar(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean actualizar(Matricula m) {
+        try {
+            coleccion.updateOne(
+                    Filters.eq("id Matricula", m.getIdMatricula()),
+                    Updates.combine(
+                            Updates.set("Fecha", m.getFecha()),
+                            Updates.set("Cedula Estudiante", m.getCedulaEstudiante()),
+                            Updates.set("Codigos Asigunaturas", m.getCodigosAsignaturas())
+                    )
+            );
+            return true;
+        } catch (Exception e) {
+            System.err.println("Error al actualizar matricular: " + e.getMessage());
+            return false;
+        }
     }
-
+    //ELIMINAR
     @Override
-    public Matricula buscarPorId(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean eliminar(String codigo) {
+        try {
+            coleccion.deleteOne(Filters.eq("codigo", codigo));
+            return true;
+        } catch (Exception e) {
+            System.err.println("Error al eliminar Matricula: " + e.getMessage());
+            return false;
+        }
     }
-
+    //LEER UNO
     @Override
-    public boolean actualizar(Matricula objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Matricula buscarPorId(String codigo) {
+        Document doc = coleccion.find(Filters.eq("codigo", codigo)).first();
+
+        if (doc == null) {
+            return null;
+        }
+
+        Matricula m = new Matricula();
+        m.setIdMatricula(doc.getString("id Matricula"));
+            m.setFecha(doc.getDate("fecha"));
+            m.setCedulaEstudiante(doc.getString("Cedula Estudiante"));
+            m.setCodigosAsignaturas(doc.getList("codigosAsignaturas", String.class));
+
+        return m;
     }
+    
+
 }
 
