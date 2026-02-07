@@ -4,17 +4,27 @@
  */
 package com.espe.vista;
 
+import com.espe.controlador.ControladorEstudiante;
+import com.espe.dao.UsuarioDAO; // Para la conexión con MongoDB
+import com.espe.modelo.Estudiante; // Para manejar los datos del alumno
+import com.espe.modelo.Usuario; // Clase padre necesaria para el polimorfismo
+import java.util.List; // Para recibir la lista de la base de datos
+import javax.swing.JOptionPane; // Para las alertas y mensajes
+import javax.swing.table.DefaultTableModel; // Para manipular la tabla
+
 /**
  *
  * @author Paul
  */
 public class PanelEstudiante extends javax.swing.JPanel {
-
+    UsuarioDAO daoUsuario = new UsuarioDAO();
+    ControladorEstudiante control = new ControladorEstudiante();
     /**
      * Creates new form PanelEstudiante
      */
     public PanelEstudiante() {
         initComponents();
+        listarEstudiantes();
     }
 
     /**
@@ -26,19 +36,307 @@ public class PanelEstudiante extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        CedulaEstudiante = new javax.swing.JTextField();
+        NombreEstudiante = new javax.swing.JTextField();
+        ApellidoEstudiante = new javax.swing.JTextField();
+        CorreoEstudiante = new javax.swing.JTextField();
+        CarreraEstudiante = new javax.swing.JTextField();
+        BtnRegistrarEstudiante = new javax.swing.JButton();
+        BtnActualizarEstudiante = new javax.swing.JButton();
+        BtnEliminarEstudiante = new javax.swing.JButton();
+        BtnLimpiarEstudiante = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TablaEstudiantes = new javax.swing.JTable();
+
+        jLabel1.setText("Cedula:");
+
+        jLabel2.setText("Nombre:");
+
+        jLabel3.setText("Apellido:");
+
+        jLabel4.setText("Correo:");
+
+        jLabel5.setText("Carrera:");
+
+        BtnRegistrarEstudiante.setText("Registrar");
+        BtnRegistrarEstudiante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnRegistrarEstudianteActionPerformed(evt);
+            }
+        });
+
+        BtnActualizarEstudiante.setText("Actualizar");
+        BtnActualizarEstudiante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnActualizarEstudianteActionPerformed(evt);
+            }
+        });
+
+        BtnEliminarEstudiante.setText("Eliminar");
+        BtnEliminarEstudiante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnEliminarEstudianteActionPerformed(evt);
+            }
+        });
+
+        BtnLimpiarEstudiante.setText("Limpiar");
+        BtnLimpiarEstudiante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnLimpiarEstudianteActionPerformed(evt);
+            }
+        });
+
+        TablaEstudiantes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Cedula", "Nombre", "Apellido", "Correo", "Carrera"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        TablaEstudiantes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaEstudiantesMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(TablaEstudiantes);
+        if (TablaEstudiantes.getColumnModel().getColumnCount() > 0) {
+            TablaEstudiantes.getColumnModel().getColumn(0).setResizable(false);
+            TablaEstudiantes.getColumnModel().getColumn(1).setResizable(false);
+            TablaEstudiantes.getColumnModel().getColumn(2).setResizable(false);
+            TablaEstudiantes.getColumnModel().getColumn(3).setResizable(false);
+            TablaEstudiantes.getColumnModel().getColumn(4).setResizable(false);
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel1))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(CedulaEstudiante)
+                                .addComponent(NombreEstudiante)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel4)
+                                .addComponent(jLabel5))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(ApellidoEstudiante)
+                                .addComponent(CorreoEstudiante)
+                                .addComponent(CarreraEstudiante))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(BtnLimpiarEstudiante)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(BtnRegistrarEstudiante)
+                                .addGap(24, 24, 24)
+                                .addComponent(BtnActualizarEstudiante)))
+                        .addGap(18, 18, 18)
+                        .addComponent(BtnEliminarEstudiante)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(CedulaEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(NombreEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(23, 23, 23)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(ApellidoEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(CorreoEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(21, 21, 21)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(CarreraEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(41, 41, 41)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(BtnRegistrarEstudiante)
+                            .addComponent(BtnActualizarEstudiante)
+                            .addComponent(BtnEliminarEstudiante))
+                        .addGap(36, 36, 36)
+                        .addComponent(BtnLimpiarEstudiante))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void TablaEstudiantesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaEstudiantesMouseClicked
+        // TODO add your handling code here:
+                                             
+        int fila = TablaEstudiantes.getSelectedRow();
+        if (fila != -1) {
+        CedulaEstudiante.setText(TablaEstudiantes.getValueAt(fila, 0).toString());
+        NombreEstudiante.setText(TablaEstudiantes.getValueAt(fila, 1).toString());
+        ApellidoEstudiante.setText(TablaEstudiantes.getValueAt(fila, 2).toString());
+        CorreoEstudiante.setText(TablaEstudiantes.getValueAt(fila, 3).toString());
+        CarreraEstudiante.setText(TablaEstudiantes.getValueAt(fila, 4).toString());
+        
+        // Bloqueamos la cédula para que no la editen por error
+        CedulaEstudiante.setEditable(false);
+        }   
+        
+    }//GEN-LAST:event_TablaEstudiantesMouseClicked
+
+    private void BtnActualizarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnActualizarEstudianteActionPerformed
+        // TODO add your handling code here:
+        com.espe.modelo.Estudiante est = new com.espe.modelo.Estudiante(
+            CedulaEstudiante.getText(),
+            NombreEstudiante.getText(),
+            ApellidoEstudiante.getText(),
+            CorreoEstudiante.getText(),
+            CarreraEstudiante.getText()
+        );
+
+        if (daoUsuario.actualizar(est)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "¡Estudiante actualizado!");
+            CedulaEstudiante.setEditable(true); 
+            listarEstudiantes(); 
+            limpiarCampos();
+        }
+    }//GEN-LAST:event_BtnActualizarEstudianteActionPerformed
+
+    private void BtnEliminarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarEstudianteActionPerformed
+        // TODO add your handling code here:
+        int fila = TablaEstudiantes.getSelectedRow();
+        if (fila == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Seleccione un estudiante");
+            return;
+        }
+
+        String cedula = TablaEstudiantes.getValueAt(fila, 0).toString();
+        if (daoUsuario.eliminar(cedula, "estudiante")) { // Pasamos "estudiante" para que borre en la colección correcta
+            javax.swing.JOptionPane.showMessageDialog(this, "Eliminado con éxito");
+            listarEstudiantes();
+        }
+    }//GEN-LAST:event_BtnEliminarEstudianteActionPerformed
+
+    private void BtnLimpiarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLimpiarEstudianteActionPerformed
+        // TODO add your handling code here:
+        limpiarCampos();
+    }//GEN-LAST:event_BtnLimpiarEstudianteActionPerformed
+
+    private void BtnRegistrarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegistrarEstudianteActionPerformed
+        // TODO add your handling code here:
+        // Capturamos los datos de tus JTextFields
+        String cedula = CedulaEstudiante.getText();
+        String nombre = NombreEstudiante.getText();
+        String apellido = ApellidoEstudiante.getText();
+        String correo = CorreoEstudiante.getText();
+        String carrera = CarreraEstudiante.getText();
+
+         // Ejecutamos el registro a través del controlador
+        control.registrarEstudiante(cedula, nombre, apellido, correo, carrera);
+    
+         // Actualizamos la tabla y limpiamos los campos
+        listarEstudiantes();
+        limpiarCampos();
+    }//GEN-LAST:event_BtnRegistrarEstudianteActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField ApellidoEstudiante;
+    private javax.swing.JButton BtnActualizarEstudiante;
+    private javax.swing.JButton BtnEliminarEstudiante;
+    private javax.swing.JButton BtnLimpiarEstudiante;
+    private javax.swing.JButton BtnRegistrarEstudiante;
+    private javax.swing.JTextField CarreraEstudiante;
+    private javax.swing.JTextField CedulaEstudiante;
+    private javax.swing.JTextField CorreoEstudiante;
+    private javax.swing.JTextField NombreEstudiante;
+    private javax.swing.JTable TablaEstudiantes;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+    
+    public void listarEstudiantes() {
+        UsuarioDAO dao = new UsuarioDAO();
+        java.util.List<com.espe.modelo.Usuario> lista = dao.leerTodos();
+    
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) TablaEstudiantes.getModel();
+        modelo.setRowCount(0);
+
+        for (com.espe.modelo.Usuario u : lista) {
+            // Aquí filtramos: si es Estudiante, lo agregamos a esta tabla
+            if (u instanceof com.espe.modelo.Estudiante) { 
+                com.espe.modelo.Estudiante e = (com.espe.modelo.Estudiante) u;
+                Object[] fila = {
+                    e.getCedula(),
+                    e.getNombre(),
+                    e.getApellido(),
+                    e.getCorreo(),
+                    e.getCarrera()
+                };
+                modelo.addRow(fila);
+            }
+        }
+    }
+    
+    private void limpiarCampos() {
+    // Limpiamos los cuadros de texto específicos de estudiante
+        CedulaEstudiante.setText("");
+        NombreEstudiante.setText("");
+        ApellidoEstudiante.setText("");
+        CorreoEstudiante.setText("");
+        CarreraEstudiante.setText("");
+    
+        // Quitamos cualquier fila seleccionada en la tabla
+         TablaEstudiantes.clearSelection();
+    
+        // Devolvemos la posibilidad de editar la cédula (por si veníamos de una actualización)
+        CedulaEstudiante.setEditable(true);
+    
+        // Ponemos el cursor en el primer campo
+        CedulaEstudiante.requestFocus();
+    }
+    
 }
