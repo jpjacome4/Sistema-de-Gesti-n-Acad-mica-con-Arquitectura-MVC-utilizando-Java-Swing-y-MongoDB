@@ -89,4 +89,56 @@ public class UsuarioDAO {
 
         return listaUsuarios;
     }
+    
+    
+    public boolean eliminar(String cedula, String tipo) {
+        try {
+            // Determinamos la colección según el tipo de usuario
+            String nombreColeccion = tipo.equalsIgnoreCase("docente") ? "docentes" : "estudiantes";
+            com.mongodb.client.MongoCollection<org.bson.Document> coleccion = db.getCollection(nombreColeccion);
+            
+            // Ejecutamos la eliminación por cédula
+            coleccion.deleteOne(new org.bson.Document("cedula", cedula));
+            return true;
+        } catch (Exception e) {
+            System.err.println("Error al eliminar: " + e.getMessage());
+            return false;
+        }
+    }
+    
+    // Método para actualizar datos de Docentes o Estudiantes
+    public boolean actualizar(Usuario usuario) {
+        try {
+            // 1. Filtro: Buscamos por la cédula (que no cambia)
+            org.bson.Document filtro = new org.bson.Document("cedula", usuario.getCedula());
+
+            // 2. Datos generales (comunes para ambos)
+            org.bson.Document datosBasicos = new org.bson.Document("nombre", usuario.getNombre())
+                    .append("apellido", usuario.getApellido())
+                    .append("correo", usuario.getCorreo());
+            
+            // 3. Si es DOCENTE, actualizamos su colección y campos extras
+            if (usuario instanceof Docente) {
+               Docente d = (Docente) usuario;
+                datosBasicos.append("titulo", d.getTitulo())
+                        .append("departamento", d.getDepartamento());
+            
+                db.getCollection("docentes").updateOne(filtro, new org.bson.Document("$set", datosBasicos));
+                return true;
+            } 
+        
+            // 4. Si es ESTUDIANTE, actualizamos su colección y su carrera
+            else if (usuario instanceof Estudiante) {
+                Estudiante e = (Estudiante) usuario;
+                datosBasicos.append("carrera", e.getCarrera());
+            
+                db.getCollection("estudiantes").updateOne(filtro, new org.bson.Document("$set", datosBasicos));
+                return true;
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error al actualizar en DAO: " + e.getMessage());
+        }
+        return false;
+    }
 }
