@@ -95,17 +95,45 @@ private JPanel contenedorPrincipal;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
+        panelMatricula3 = new com.espe.vista.PanelMatricula();
+        panelDocente1 = new com.espe.vista.PanelDocente();
+        panelEstudiante1 = new com.espe.vista.PanelEstudiante();
+        panelAsignaturas1 = new com.espe.vista.PanelAsignaturas();
+        panelReporte1 = new com.espe.vista.PanelReporte();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("SISTEMA DE GESTION ACADEMICA");
+
+        jTabbedPane2.addTab("Matricula", panelMatricula3);
+        jTabbedPane2.addTab("Docente", panelDocente1);
+        jTabbedPane2.addTab("Estudiante", panelEstudiante1);
+        jTabbedPane2.addTab("Asignaturas", panelAsignaturas1);
+        jTabbedPane2.addTab("Reporte", panelReporte1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(400, 400, 400))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 891, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41))
         );
 
         pack();
@@ -137,5 +165,12 @@ private JPanel contenedorPrincipal;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JTabbedPane jTabbedPane2;
+    private com.espe.vista.PanelAsignaturas panelAsignaturas1;
+    private com.espe.vista.PanelDocente panelDocente1;
+    private com.espe.vista.PanelEstudiante panelEstudiante1;
+    private com.espe.vista.PanelMatricula panelMatricula3;
+    private com.espe.vista.PanelReporte panelReporte1;
     // End of variables declaration//GEN-END:variables
 }
