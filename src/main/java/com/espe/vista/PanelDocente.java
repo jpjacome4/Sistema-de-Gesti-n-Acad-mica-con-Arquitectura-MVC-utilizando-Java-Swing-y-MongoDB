@@ -4,6 +4,13 @@
  */
 package com.espe.vista;
 
+import com.espe.controlador.ControladorDocente;
+import com.espe.dao.UsuarioDAO;
+import com.espe.modelo.Docente; // Esta es la más importante
+import javax.swing.JOptionPane;
+import com.espe.modelo.Usuario;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Paul
@@ -13,8 +20,11 @@ public class PanelDocente extends javax.swing.JPanel {
     /**
      * Creates new form PanelDocente
      */
+    UsuarioDAO daoUsuario = new UsuarioDAO();
+    ControladorDocente control = new ControladorDocente();
     public PanelDocente() {
         initComponents();
+        listarDocentes();
     }
 
     /**
@@ -26,19 +36,322 @@ public class PanelDocente extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        Departamento = new javax.swing.JTextField();
+        Titulo = new javax.swing.JTextField();
+        CorreoDocente = new javax.swing.JTextField();
+        ApellidoDocente = new javax.swing.JTextField();
+        NombreDocente = new javax.swing.JTextField();
+        CedulaDocente = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TablaDocentes = new javax.swing.JTable();
+        BtnRegistrardocente = new javax.swing.JButton();
+        BtnActualizar = new javax.swing.JButton();
+        BtnEliminarDocente = new javax.swing.JButton();
+        BtnLimpiarDocente = new javax.swing.JButton();
+
+        jLabel1.setText("Cedula:");
+
+        jLabel2.setText("Nombre:");
+
+        jLabel3.setText("Apellido:");
+
+        jLabel4.setText("Correo:");
+
+        jLabel5.setText("Titulo:");
+
+        jLabel6.setText("Departamento:");
+
+        TablaDocentes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Cedula", "Nombre", "Apellido", "Titulo", "Departamento", "Correo"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        TablaDocentes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaDocentesMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(TablaDocentes);
+        if (TablaDocentes.getColumnModel().getColumnCount() > 0) {
+            TablaDocentes.getColumnModel().getColumn(0).setResizable(false);
+            TablaDocentes.getColumnModel().getColumn(1).setResizable(false);
+            TablaDocentes.getColumnModel().getColumn(2).setResizable(false);
+            TablaDocentes.getColumnModel().getColumn(3).setResizable(false);
+            TablaDocentes.getColumnModel().getColumn(4).setResizable(false);
+            TablaDocentes.getColumnModel().getColumn(5).setResizable(false);
+        }
+
+        BtnRegistrardocente.setText("Registar");
+        BtnRegistrardocente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnRegistrardocenteActionPerformed(evt);
+            }
+        });
+
+        BtnActualizar.setText("Actualizar");
+        BtnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnActualizarActionPerformed(evt);
+            }
+        });
+
+        BtnEliminarDocente.setText("Eliminar");
+        BtnEliminarDocente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnEliminarDocenteActionPerformed(evt);
+            }
+        });
+
+        BtnLimpiarDocente.setText("Limpiar");
+        BtnLimpiarDocente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnLimpiarDocenteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(BtnRegistrardocente)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(BtnLimpiarDocente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(BtnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(BtnEliminarDocente))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4))))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(NombreDocente)
+                            .addComponent(ApellidoDocente, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(CorreoDocente, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Titulo, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Departamento, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(CedulaDocente, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(72, 72, 72)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(CedulaDocente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(NombreDocente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(ApellidoDocente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(CorreoDocente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(Titulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(Departamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(41, 41, 41)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(BtnRegistrardocente)
+                            .addComponent(BtnActualizar)
+                            .addComponent(BtnEliminarDocente))
+                        .addGap(27, 27, 27)
+                        .addComponent(BtnLimpiarDocente))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void BtnRegistrardocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegistrardocenteActionPerformed
+        // TODO add your handling code here:
+        String cedula = CedulaDocente.getText();
+        String nombre = NombreDocente.getText();
+        String apellido = ApellidoDocente.getText();
+        String correo = CorreoDocente.getText();
+        String titulo = Titulo.getText();
+        String departamento = Departamento.getText();
+
+        // Mandamos al controlador
+        control.registrarDocente(cedula, nombre, apellido, correo, titulo, departamento);
+    
+        // Actualizamos la tabla (podemos crear un listarDocentes similar al de matricula)
+        listarDocentes();
+        limpiarCampos();
+    }//GEN-LAST:event_BtnRegistrardocenteActionPerformed
+
+    private void BtnLimpiarDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLimpiarDocenteActionPerformed
+        // TODO add your handling code here:
+        limpiarCampos();
+    }//GEN-LAST:event_BtnLimpiarDocenteActionPerformed
+
+    private void BtnEliminarDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarDocenteActionPerformed
+        // TODO add your handling code here:
+        int fila = TablaDocentes.getSelectedRow();
+    
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un docente de la tabla");
+            return;
+        }
+
+        // Obtenemos la cédula (columna 0)
+        String cedula = TablaDocentes.getValueAt(fila, 0).toString();
+
+        int confirmar = JOptionPane.showConfirmDialog(this, "¿Eliminar al docente con cédula " + cedula + "?");
+        if (confirmar == JOptionPane.YES_OPTION) {
+            // Aquí llamarás a un método en tu UsuarioDAO para eliminar
+            // Nota: Debes asegurarte de borrarlo de la colección "docentes"
+            if (daoUsuario.eliminar(cedula, "docente")) { 
+                    JOptionPane.showMessageDialog(this, "Eliminado con éxito");
+                    listarDocentes();
+                    limpiarCampos();
+                }
+            }
+    }//GEN-LAST:event_BtnEliminarDocenteActionPerformed
+
+    private void TablaDocentesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDocentesMouseClicked
+        // TODO add your handling code here:
+        int fila = TablaDocentes.getSelectedRow();
+        if (fila != -1) {
+            // Usamos tus nombres de variables exactos
+            CedulaDocente.setText(TablaDocentes.getValueAt(fila, 0).toString());
+            NombreDocente.setText(TablaDocentes.getValueAt(fila, 1).toString());
+            ApellidoDocente.setText(TablaDocentes.getValueAt(fila, 2).toString());
+            Titulo.setText(TablaDocentes.getValueAt(fila, 3).toString());
+            Departamento.setText(TablaDocentes.getValueAt(fila, 4).toString());
+            CorreoDocente.setText(TablaDocentes.getValueAt(fila, 5).toString());
+        
+            // Bloqueamos la cédula para evitar errores de llave primaria
+            CedulaDocente.setEditable(false);
+        }
+    }//GEN-LAST:event_TablaDocentesMouseClicked
+
+    private void BtnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnActualizarActionPerformed
+        // TODO add your handling code here:
+        Docente docenteEditado = new Docente(
+            CedulaDocente.getText(),
+            NombreDocente.getText(),
+            ApellidoDocente.getText(),
+            CorreoDocente.getText(),
+            Titulo.getText(),
+            Departamento.getText()
+        );
+
+        // 2. Ejecutamos la actualización
+        if (daoUsuario.actualizar(docenteEditado)) {
+            JOptionPane.showMessageDialog(this, "¡Docente actualizado!");
+        
+            // 3. Resetear interfaz
+            CedulaDocente.setEditable(true); 
+            listarDocentes(); 
+            limpiarCampos(); 
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al actualizar");
+        }
+    }//GEN-LAST:event_BtnActualizarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField ApellidoDocente;
+    private javax.swing.JButton BtnActualizar;
+    private javax.swing.JButton BtnEliminarDocente;
+    private javax.swing.JButton BtnLimpiarDocente;
+    private javax.swing.JButton BtnRegistrardocente;
+    private javax.swing.JTextField CedulaDocente;
+    private javax.swing.JTextField CorreoDocente;
+    private javax.swing.JTextField Departamento;
+    private javax.swing.JTextField NombreDocente;
+    private javax.swing.JTable TablaDocentes;
+    private javax.swing.JTextField Titulo;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+   
+    public void listarDocentes() {
+    UsuarioDAO dao = new UsuarioDAO();
+    java.util.List<com.espe.modelo.Usuario> lista = dao.leerTodos();
+    
+    javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) TablaDocentes.getModel();
+    modelo.setRowCount(0);
+
+        for (com.espe.modelo.Usuario u : lista) {
+            if (u instanceof Docente) { // Solo nos interesan los docentes aquí
+                Docente d = (Docente) u;
+                Object[] fila = {
+                    d.getCedula(),
+                    d.getNombre(),
+                    d.getApellido(),
+                    d.getTitulo(),
+                    d.getDepartamento(),
+                    d.getCorreo()
+                };
+                modelo.addRow(fila);
+            }
+        }
+    }
+    private void limpiarCampos(){
+        CedulaDocente.setText("");
+        NombreDocente.setText("");
+        ApellidoDocente.setText("");
+        CorreoDocente.setText("");
+        Titulo.setText("");
+        Departamento.setText("");
+        CedulaDocente.requestFocus();
+    }
 }
