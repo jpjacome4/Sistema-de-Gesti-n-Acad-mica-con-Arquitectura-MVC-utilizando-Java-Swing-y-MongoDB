@@ -106,17 +106,21 @@ public class AsignaturaDAO implements ICrud<Asignatura>{
     }
     
     public List<Asignatura> buscarPorDocente(String cedulaDocente) {
-        List<Asignatura> lista = new ArrayList<>();
-
-        for (Document doc : coleccion.find(Filters.eq("cedulaDocente", cedulaDocente))) {
-            Asignatura a = new Asignatura();
-            a.setCodigo(doc.getString("codigo"));
-            a.setNombre(doc.getString("nombre"));
+    List<Asignatura> lista = new ArrayList<>();
+    // Filtramos en la colección de MongoDB
+    for (org.bson.Document doc : coleccion.find(com.mongodb.client.model.Filters.eq("cedulaDocente", cedulaDocente))) {
+        Asignatura a = new Asignatura();
+        a.setCodigo(doc.getString("codigo"));
+        a.setNombre(doc.getString("nombre"));
+        
+        // Verificación de seguridad para los créditos
+        if (doc.get("creditos") != null) {
             a.setCreditos(doc.getInteger("creditos"));
-            a.setCedulaDocente(doc.getString("cedulaDocente"));
-
-            lista.add(a);
         }
-        return lista;
+        
+        a.setCedulaDocente(doc.getString("cedulaDocente"));
+        lista.add(a);
     }
+    return lista;
+}
 }
