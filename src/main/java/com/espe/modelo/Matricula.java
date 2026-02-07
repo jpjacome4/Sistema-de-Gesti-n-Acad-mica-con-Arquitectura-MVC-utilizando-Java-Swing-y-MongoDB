@@ -14,7 +14,7 @@ import java.util.UUID;
  * @author Paul
  */
 public class Matricula {
- private String idMatricula;
+    private String idMatricula;
     private Date fecha;
     private String cedulaEstudiante;
     private List<String> codigosAsignaturas;
