@@ -3,18 +3,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package com.espe.vista;
-
+import com.espe.controlador.ControladorAsignatura;
+import com.espe.dao.AsignaturaDAO;
+import com.espe.modelo.Asignatura;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
 /**
  *
  * @author Paul
  */
 public class PanelAsignaturas extends javax.swing.JPanel {
-
+    AsignaturaDAO daoAsignatura = new AsignaturaDAO();
+    ControladorAsignatura controlAsig = new ControladorAsignatura();
     /**
      * Creates new form PanelAsignaturas
      */
     public PanelAsignaturas() {
         initComponents();
+        listarAsignaturas();
     }
 
     /**
@@ -26,19 +33,306 @@ public class PanelAsignaturas extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        CodigoAsignatura = new javax.swing.JTextField();
+        NombreAsignatura = new javax.swing.JTextField();
+        CreditosAsignaturas = new javax.swing.JTextField();
+        CadulaDocente = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TablaAsignaturas = new javax.swing.JTable();
+        BtnRegistarAsignatura = new javax.swing.JButton();
+        BtnActualizarAsignatura = new javax.swing.JButton();
+        BtnEliminarASignatura = new javax.swing.JButton();
+        BtnLimpiarAsignatura = new javax.swing.JButton();
+
+        jLabel1.setText("Codigo:");
+
+        jLabel2.setText("Nombre:");
+
+        jLabel3.setText("Creditos:");
+
+        jLabel4.setText("Cedula Docente:");
+
+        CodigoAsignatura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CodigoAsignaturaActionPerformed(evt);
+            }
+        });
+
+        TablaAsignaturas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Codigo", "Nombre", "Creditos", "Docente"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        TablaAsignaturas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaAsignaturasMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(TablaAsignaturas);
+        if (TablaAsignaturas.getColumnModel().getColumnCount() > 0) {
+            TablaAsignaturas.getColumnModel().getColumn(0).setResizable(false);
+            TablaAsignaturas.getColumnModel().getColumn(1).setResizable(false);
+            TablaAsignaturas.getColumnModel().getColumn(2).setResizable(false);
+            TablaAsignaturas.getColumnModel().getColumn(3).setResizable(false);
+        }
+
+        BtnRegistarAsignatura.setText("Registrar");
+        BtnRegistarAsignatura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnRegistarAsignaturaActionPerformed(evt);
+            }
+        });
+
+        BtnActualizarAsignatura.setText("Actualizar");
+        BtnActualizarAsignatura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnActualizarAsignaturaActionPerformed(evt);
+            }
+        });
+
+        BtnEliminarASignatura.setText("Eliminar");
+        BtnEliminarASignatura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnEliminarASignaturaActionPerformed(evt);
+            }
+        });
+
+        BtnLimpiarAsignatura.setText("Limpiar");
+        BtnLimpiarAsignatura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnLimpiarAsignaturaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)))
+                            .addComponent(jLabel4))
+                        .addGap(29, 29, 29)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(CadulaDocente)
+                            .addComponent(CreditosAsignaturas, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(NombreAsignatura, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(CodigoAsignatura, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(BtnRegistarAsignatura)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(BtnLimpiarAsignatura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(BtnActualizarAsignatura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(BtnEliminarASignatura)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(CodigoAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(23, 23, 23)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(NombreAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(CreditosAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(CadulaDocente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(49, 49, 49)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(BtnRegistarAsignatura)
+                            .addComponent(BtnActualizarAsignatura)
+                            .addComponent(BtnEliminarASignatura))
+                        .addGap(30, 30, 30)
+                        .addComponent(BtnLimpiarAsignatura))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void CodigoAsignaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CodigoAsignaturaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CodigoAsignaturaActionPerformed
+
+    private void TablaAsignaturasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaAsignaturasMouseClicked
+        // TODO add your handling code here:
+        int fila = TablaAsignaturas.getSelectedRow();
+        if (fila != -1) {
+            CodigoAsignatura.setText(TablaAsignaturas.getValueAt(fila, 0).toString());
+            NombreAsignatura.setText(TablaAsignaturas.getValueAt(fila, 1).toString());
+            CreditosAsignaturas.setText(TablaAsignaturas.getValueAt(fila, 2).toString());
+            CadulaDocente.setText(TablaAsignaturas.getValueAt(fila, 3).toString());
+        
+            // Bloqueamos el código para que no lo editen (es la llave en MongoDB)
+            CodigoAsignatura.setEditable(false);
+        }
+    }//GEN-LAST:event_TablaAsignaturasMouseClicked
+
+    private void BtnRegistarAsignaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegistarAsignaturaActionPerformed
+        // TODO add your handling code here:
+        try {
+            // 2. Sacas los datos de tus cuadros de texto
+            String cod = CodigoAsignatura.getText();
+            String nom = NombreAsignatura.getText();
+            int cred = Integer.parseInt(CreditosAsignaturas.getText());
+            String cedDoc = CadulaDocente.getText();
+
+            // 3. Le mandas los datos al controlador
+            if (controlAsig.guardarAsignatura(cod, nom, cred, cedDoc)) {
+                JOptionPane.showMessageDialog(this, "¡Asignatura guardada!");
+                listarAsignaturas(); // Refrescas la tabla
+                limpiarCampos();     // Limpias los textos
+            }
+        } catch (IllegalArgumentException e) {
+             // Aquí cae el error si pusiste créditos negativos
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_BtnRegistarAsignaturaActionPerformed
+
+    private void BtnActualizarAsignaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnActualizarAsignaturaActionPerformed
+        // TODO add your handling code here:
+        try {
+            Asignatura a = new Asignatura(
+                CodigoAsignatura.getText(),
+                NombreAsignatura.getText(),
+                Integer.parseInt(CreditosAsignaturas.getText()),
+                CadulaDocente.getText()
+            );
+
+            if (daoAsignatura.actualizar(a)) {
+                JOptionPane.showMessageDialog(this, "Asignatura actualizada correctamente");
+                CodigoAsignatura.setEditable(true);
+                listarAsignaturas();
+                limpiarCampos();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al actualizar: " + e.getMessage());
+        }
+    }//GEN-LAST:event_BtnActualizarAsignaturaActionPerformed
+
+    private void BtnEliminarASignaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarASignaturaActionPerformed
+        // TODO add your handling code here:
+        int fila = TablaAsignaturas.getSelectedRow();
+    
+        if (fila == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, seleccione una asignatura de la tabla para eliminar.");
+             return;
+        }
+
+        // 2. Obtenemos el código de la asignatura (que está en la columna 0)
+        String codigo = TablaAsignaturas.getValueAt(fila, 0).toString();
+
+        // 3. Pedimos confirmación para evitar borrados por error
+        int confirmar = javax.swing.JOptionPane.showConfirmDialog(this, 
+                "¿Está seguro de eliminar la asignatura con código: " + codigo + "?", 
+                "Confirmar eliminación", javax.swing.JOptionPane.YES_NO_OPTION);
+
+        if (confirmar == javax.swing.JOptionPane.YES_OPTION) {
+            // 4. Llamamos al método eliminar de tu DAO
+            if (daoAsignatura.eliminar(codigo)) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Asignatura eliminada con éxito.");
+            
+                // 5. Actualizamos la tabla y limpiamos los campos
+                listarAsignaturas();
+                limpiarCampos();
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error al intentar eliminar la asignatura.");
+            }
+        }
+    }//GEN-LAST:event_BtnEliminarASignaturaActionPerformed
+
+    private void BtnLimpiarAsignaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLimpiarAsignaturaActionPerformed
+        // TODO add your handling code here:
+        limpiarCampos();
+    }//GEN-LAST:event_BtnLimpiarAsignaturaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnActualizarAsignatura;
+    private javax.swing.JButton BtnEliminarASignatura;
+    private javax.swing.JButton BtnLimpiarAsignatura;
+    private javax.swing.JButton BtnRegistarAsignatura;
+    private javax.swing.JTextField CadulaDocente;
+    private javax.swing.JTextField CodigoAsignatura;
+    private javax.swing.JTextField CreditosAsignaturas;
+    private javax.swing.JTextField NombreAsignatura;
+    private javax.swing.JTable TablaAsignaturas;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+    public void listarAsignaturas() {
+        List<Asignatura> lista = daoAsignatura.leerTodos();
+        DefaultTableModel modelo = (DefaultTableModel) TablaAsignaturas.getModel();
+        modelo.setRowCount(0); // Limpia la tabla
+
+        for (Asignatura a : lista) {
+            Object[] fila = {
+                a.getCodigo(),
+                a.getNombre(),
+                a.getCreditos(),
+                a.getCedulaDocente()
+            };
+            modelo.addRow(fila);
+        }
+    }
+    
+    private void limpiarCampos() {
+        CodigoAsignatura.setText("");
+        NombreAsignatura.setText("");
+        CreditosAsignaturas.setText("");
+        CadulaDocente.setText("");
+    
+        TablaAsignaturas.clearSelection();
+        CodigoAsignatura.setEditable(true);
+        CodigoAsignatura.requestFocus();
+    }
 }
