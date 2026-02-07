@@ -50,9 +50,9 @@ public class MatriculaDAO  implements ICrud<Matricula>  {
 
         for (Document doc : coleccion.find()) {
             Matricula m = new Matricula();
-            m.setIdMatricula(doc.getString("id Matricula"));
+            m.setIdMatricula(doc.getString("idMatricula"));
             m.setFecha(doc.getDate("fecha"));
-            m.setCedulaEstudiante(doc.getString("Cedula Estudiante"));
+            m.setCedulaEstudiante(doc.getString("cedulaEstudiante"));
             m.setCodigosAsignaturas(doc.getList("codigosAsignaturas", String.class));
             lista.add(m);
         }
@@ -65,11 +65,11 @@ public class MatriculaDAO  implements ICrud<Matricula>  {
     public boolean actualizar(Matricula m) {
         try {
             coleccion.updateOne(
-                    Filters.eq("id Matricula", m.getIdMatricula()),
+                    Filters.eq("idMatricula", m.getIdMatricula()),
                     Updates.combine(
                             Updates.set("Fecha", m.getFecha()),
-                            Updates.set("Cedula Estudiante", m.getCedulaEstudiante()),
-                            Updates.set("Codigos Asigunaturas", m.getCodigosAsignaturas())
+                            Updates.set("cedulaEstudiante", m.getCedulaEstudiante()),
+                            Updates.set("codigosAsigunaturas", m.getCodigosAsignaturas())
                     )
             );
             return true;
@@ -80,9 +80,10 @@ public class MatriculaDAO  implements ICrud<Matricula>  {
     }
     //ELIMINAR
     @Override
-    public boolean eliminar(String codigo) {
+    public boolean eliminar(String id) {
         try {
-            coleccion.deleteOne(Filters.eq("codigo", codigo));
+            // Cambiamos "codigo" por "idMatricula" para que coincida con tu base de datos
+            coleccion.deleteOne(Filters.eq("idMatricula", id));
             return true;
         } catch (Exception e) {
             System.err.println("Error al eliminar Matricula: " + e.getMessage());
@@ -99,9 +100,9 @@ public class MatriculaDAO  implements ICrud<Matricula>  {
         }
 
         Matricula m = new Matricula();
-        m.setIdMatricula(doc.getString("id Matricula"));
+        m.setIdMatricula(doc.getString("idMatricula"));
             m.setFecha(doc.getDate("fecha"));
-            m.setCedulaEstudiante(doc.getString("Cedula Estudiante"));
+            m.setCedulaEstudiante(doc.getString("cedulaEstudiante"));
             m.setCodigosAsignaturas(doc.getList("codigosAsignaturas", String.class));
 
         return m;
