@@ -4,8 +4,10 @@
  */
 package com.espe.controlador;
 
+import com.espe.dao.AsignaturaDAO;
 import com.espe.dao.MatriculaDAO;
 import com.espe.dao.UsuarioDAO;
+import com.espe.modelo.Asignatura;
 import com.espe.modelo.Estudiante;
 import com.espe.modelo.Matricula;
 import com.espe.modelo.Usuario;
@@ -20,6 +22,7 @@ public class ReporteService {
    // Dependencias necesarias para la integración de Persona 3
     private MatriculaDAO mDAO = new MatriculaDAO();
     private UsuarioDAO uDAO = new UsuarioDAO();
+    private AsignaturaDAO aDAO = new AsignaturaDAO();
 
     /**
      * Obtiene la lista de estudiantes inscritos en una materia específica.
@@ -27,35 +30,26 @@ public class ReporteService {
      * @return Lista de objetos Estudiante con sus nombres y datos reales.
      */
     public List<Estudiante> obtenerEstudiantesPorMateria(String codigoMateria) {
-        List<Estudiante> estudiantesInscritos = new ArrayList<>();
+        List<Estudiante> inscritos = new ArrayList<>();
+        List<Matricula> matriculas = mDAO.leerTodos();
+        List<Usuario> usuarios = uDAO.leerTodos();
 
-        // 1. Obtiene todas las matrículas del sistema
-        List<Matricula> todasLasMatriculas = mDAO.leerTodos();
-
-        for (Matricula matricula : todasLasMatriculas) {
-            // Verificamos si la matrícula contiene el código de la materia
-            if (matricula.getCodigosAsignaturas().contains(codigoMateria)) {
-                
-                // 2. Extraemos la cédula del estudiante de esa matrícula
-                String cedulaMatricula = matricula.getCedulaEstudiante();
-
-                // 3. Llamamos a UsuarioDAO para buscar el usuario por su cédula
-                // Se obtiene la lista completa de usuarios para realizar la comparación manual
-                List<Usuario> listaUsuarios = uDAO.leerTodos();
-
-                for (Usuario usuario : listaUsuarios) {
-                    // 4. Comparamos que tengan la misma cédula y sea un estudiante
-                    if (usuario.getCedula().equals(cedulaMatricula) && usuario instanceof Estudiante) {
-                        
-                        // 5. Al coincidir, ya tenemos acceso a los nombres y apellidos
-                        estudiantesInscritos.add((Estudiante) usuario);
-                        break; // Pasamos a la siguiente matrícula
+        for (Matricula m : matriculas) {
+            // Verificamos si la materia está en la lista de la matrícula
+            if (m.getCodigosAsignaturas() != null && m.getCodigosAsignaturas().contains(codigoMateria)) {
+                for (Usuario u : usuarios) {
+                    if (u.getCedula().equals(m.getCedulaEstudiante()) && u instanceof Estudiante) {
+                        inscritos.add((Estudiante) u);
                     }
                 }
             }
         }
-
-        return estudiantesInscritos;
+        return inscritos;
     }
+    
+    public List<Asignatura> obtenerAsignaturasPorDocente(String cedulaDocente) {
+        AsignaturaDAO asignaturaDAO = new AsignaturaDAO();
+        return asignaturaDAO.buscarPorDocente(cedulaDocente);
     }
+}
 
