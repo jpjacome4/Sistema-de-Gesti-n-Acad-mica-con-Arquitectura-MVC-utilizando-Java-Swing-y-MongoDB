@@ -4,6 +4,12 @@
  */
 package com.espe.vista;
 
+import com.espe.controlador.ControladorMatricula;
+import com.espe.dao.MatriculaDAO;
+import com.espe.modelo.Matricula;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Paul
@@ -13,8 +19,10 @@ public class PanelMatricula extends javax.swing.JPanel {
     /**
      * Creates new form PanelMatricula
      */
+    ControladorMatricula control = new ControladorMatricula();
     public PanelMatricula() {
         initComponents();
+        listarMatriculas();
     }
 
     /**
@@ -26,19 +34,218 @@ public class PanelMatricula extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        BtnMatricular = new javax.swing.JButton();
+        BtnEliminarMatricula = new javax.swing.JButton();
+        BtnLimpiarMatricula = new javax.swing.JButton();
+        EstudianteCedula = new javax.swing.JTextField();
+        AsignaturaMatricular = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TablaMatricula = new javax.swing.JTable();
+
+        jLabel1.setText("Cedula :");
+
+        jLabel2.setText("Asignatura:");
+
+        BtnMatricular.setText("Matricular");
+        BtnMatricular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnMatricularActionPerformed(evt);
+            }
+        });
+
+        BtnEliminarMatricula.setText("Eliminar");
+        BtnEliminarMatricula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnEliminarMatriculaActionPerformed(evt);
+            }
+        });
+
+        BtnLimpiarMatricula.setText("Limpiar");
+        BtnLimpiarMatricula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnLimpiarMatriculaActionPerformed(evt);
+            }
+        });
+
+        TablaMatricula.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID Matricula", "Cedula Estudiante", "Asignaturas", "Fecha"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(TablaMatricula);
+        if (TablaMatricula.getColumnModel().getColumnCount() > 0) {
+            TablaMatricula.getColumnModel().getColumn(0).setResizable(false);
+            TablaMatricula.getColumnModel().getColumn(1).setResizable(false);
+            TablaMatricula.getColumnModel().getColumn(2).setResizable(false);
+            TablaMatricula.getColumnModel().getColumn(3).setResizable(false);
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(BtnMatricular)
+                        .addGap(18, 18, 18)
+                        .addComponent(BtnEliminarMatricula)
+                        .addGap(18, 18, 18)
+                        .addComponent(BtnLimpiarMatricula))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(40, 40, 40)
+                        .addComponent(EstudianteCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(23, 23, 23)
+                        .addComponent(AsignaturaMatricular, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 33, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(104, 104, 104)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(EstudianteCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(AsignaturaMatricular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(114, 114, 114)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BtnMatricular)
+                    .addComponent(BtnEliminarMatricula)
+                    .addComponent(BtnLimpiarMatricula))
+                .addContainerGap(187, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void BtnMatricularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnMatricularActionPerformed
+    // Instanciamos el controlador (puedes poner esto al inicio de la clase)
+    
+                                    
+    // Capturamos lo que escribió el usuario
+    String cedula = EstudianteCedula.getText(); // Ajusta al nombre de tu variable
+    String asignaturas = AsignaturaMatricular.getText();   // Ajusta al nombre de tu variable
+    
+    // Le pedimos al controlador que haga el trabajo
+    control.registrarMatricula(cedula, asignaturas);
+    
+    // Opcional: Limpiar campos
+    EstudianteCedula.setText("");
+    AsignaturaMatricular.setText("");
+    listarMatriculas();
+    }//GEN-LAST:event_BtnMatricularActionPerformed
+
+    private void BtnEliminarMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarMatriculaActionPerformed
+        // TODO add your handling code here:
+        int fila = TablaMatricula.getSelectedRow();
+    
+    if (fila == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Por favor, seleccione una matrícula de la tabla.");
+        return;
+    }
+
+    // 2. Obtener el ID de la matrícula de la primera columna (columna 0)
+    String idEliminar = TablaMatricula.getValueAt(fila, 0).toString();
+
+    // 3. Confirmar la eliminación
+    int confirmar = javax.swing.JOptionPane.showConfirmDialog(this, 
+            "¿Estás seguro de eliminar la matrícula: " + idEliminar + "?", 
+            "Confirmar", javax.swing.JOptionPane.YES_NO_OPTION);
+
+        if (confirmar == javax.swing.JOptionPane.YES_OPTION) {
+        MatriculaDAO dao = new MatriculaDAO();
+            if (dao.eliminar(idEliminar)) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Matrícula eliminada con éxito.");
+                listarMatriculas(); // Actualizamos la tabla para que ya no aparezca
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error al eliminar de la base de datos.");
+            }
+        }
+    }//GEN-LAST:event_BtnEliminarMatriculaActionPerformed
+
+    private void BtnLimpiarMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLimpiarMatriculaActionPerformed
+        // TODO add your handling code here:
+        // Borra el texto de los campos de entrada
+        EstudianteCedula.setText(""); 
+        AsignaturaMatricular.setText("");
+    
+        // Si tienes un campo de fecha visible, también lo limpiamos
+        // txtFecha.setText(""); 
+
+        // Quita la selección de la tabla si hay alguna
+        TablaMatricula.clearSelection();
+    
+        // Pone el foco (el cursor) de nuevo en el primer campo
+        EstudianteCedula.requestFocus();
+    }//GEN-LAST:event_BtnLimpiarMatriculaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField AsignaturaMatricular;
+    private javax.swing.JButton BtnEliminarMatricula;
+    private javax.swing.JButton BtnLimpiarMatricula;
+    private javax.swing.JButton BtnMatricular;
+    private javax.swing.JTextField EstudianteCedula;
+    private javax.swing.JTable TablaMatricula;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+    public void listarMatriculas() {
+    MatriculaDAO dao = new MatriculaDAO();
+    List<Matricula> lista = dao.leerTodos();
+    
+    // 1. Definimos el formato simple (Día/Mes/Año)
+    java.text.SimpleDateFormat formato = new java.text.SimpleDateFormat("dd/MM/yyyy");
+
+    DefaultTableModel modelo = (DefaultTableModel) TablaMatricula.getModel();
+    modelo.setRowCount(0); 
+
+        for (Matricula m : lista) {
+        String asignaturas = String.join(", ", m.getCodigosAsignaturas());
+        
+        // 2. Aplicamos el formato a la fecha antes de enviarla a la tabla
+        String fechaFormateada = formato.format(m.getFecha());
+
+            Object[] fila = {
+                m.getIdMatricula(),
+                m.getCedulaEstudiante(),
+                asignaturas,
+                fechaFormateada // <--- Ahora se verá limpio
+            };
+        modelo.addRow(fila);
+        }
+    }
 }
